@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/foxrough/PackageManager4Apps/blob/master/LICENSE</licenseUrl>
+    <!-- <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl> -->
+    <projectUrl>https://github.com/foxrough/PackageManager4Apps</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Package Manager for Apps allow you to use a nuget server as a Prism module repository. $id$ contains all the Nuget Client implementation (API v2)</description>
+    <releaseNotes>
+      Git-Sha:'$BUILD_SOURCEVERSION$'
+    </releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags></tags>
+    <dependencies>
+      <dependency id="PackageManager4Apps" version="$version$" />
+      <dependency id="Nuget.Core" version="2.14.0" />
+    </dependencies>
+  </metadata>
+</package>
