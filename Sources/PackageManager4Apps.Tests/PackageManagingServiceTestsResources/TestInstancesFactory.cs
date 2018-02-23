@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using PackageManager4Apps;
-using PackageManager4Apps.Nuget;
+using PackageManager4Apps.ImplemNuget;
 
-namespace AppPackageManager.Tests.PackageManagingServiceTestsResources
+namespace PackageManager4Apps.Tests.PackageManagingServiceTestsResources
 {
     internal static class TestInstancesFactory
     {
@@ -28,11 +26,8 @@ namespace AppPackageManager.Tests.PackageManagingServiceTestsResources
         public static IPackageManagingService CreateCachedPackageManagingService(bool allowMultipleVersionsInCache, DirectoryInfo cache)
         {
             var execFolder = new FileInfo(typeof(TestInstancesFactory).Assembly.ManifestModule.FullyQualifiedName).Directory.FullName;
-            return new NugetPackageManagingService(
-                new Uri(Path.Combine(execFolder, "LocalNugetNupkg"), UriKind.Absolute),
-                cache,
-                allowMultipleVersionsInCache,
-                m => Debug.WriteLine(m));
+            return new NugetPackageManagingService(new Uri(Path.Combine(execFolder, "LocalNugetNupkg"), UriKind.Absolute), cache, allowMultipleVersionsInCache,
+                new TestLogger());
         }
 
         public static DirectoryInfo CreateCacheTestsDirectoryInfo()

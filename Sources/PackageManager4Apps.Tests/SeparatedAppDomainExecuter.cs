@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 
-namespace AppPackageManager.Tests
+namespace PackageManager4Apps.Tests
 {
     /// <summary>
-    /// Stratégie d'exécution de code au sein d'un app domain séparé
+    /// Strategy that encapsulate the execution of a method in a separated appdomain
     /// </summary>
     public class SeparatedAppDomainExecuter
     {

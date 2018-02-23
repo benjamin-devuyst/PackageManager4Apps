@@ -1,7 +1,7 @@
-﻿using AppPackageManager.Tests.PackageManagingServiceTestsResources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PackageManager4Apps.Tests.PackageManagingServiceTestsResources;
 
-namespace AppPackageManager.Tests
+namespace PackageManager4Apps.Tests
 {
     [TestClass]
     public class CachedNugetPackageManagingServiceTest
@@ -14,9 +14,8 @@ namespace AppPackageManager.Tests
         [TestMethod]
         public void EnsurePackageLoadedAsync_SingleVersionAtATimeInCache()
         {
-            // nécessité d'exécuter dans un appdomain séparé pour ne pas être influencé par les autres tests
-            // car on manipule le chargement d'assemblies dans l'appdomain.
-            // le test nécessite un appdomain clean pour valider les asserts.
+            // We need to execute tests on a separated AppDomain to ensure the isolation of the assemblies loaded in appdomain
+            // each execution need a clean appdomain
             var executer = new SeparatedAppDomainExecuter();
 
             executer.Run(typeof(SingleVersionsPackageManagingServiceTestCase), nameof(SingleVersionsPackageManagingServiceTestCase.RunPackage1Version1), null);
@@ -26,9 +25,8 @@ namespace AppPackageManager.Tests
         [TestMethod]
         public void EnsurePackageLoadedAsync_MultiVersionAtATimeInCache()
         {
-            // nécessité d'exécuter dans un appdomain séparé pour ne pas être influencé par les autres tests
-            // car on manipule le chargement d'assemblies dans l'appdomain.
-            // le test nécessite un appdomain clean pour valider les asserts.
+            // We need to execute tests on a separated AppDomain to ensure the isolation of the assemblies loaded in appdomain
+            // each execution need a clean appdomain
             var executer = new SeparatedAppDomainExecuter();
 
             executer.Run(typeof(MultiVersionsPackageManagingServiceTestCase), nameof(MultiVersionsPackageManagingServiceTestCase.RunPackage1Version1), null);

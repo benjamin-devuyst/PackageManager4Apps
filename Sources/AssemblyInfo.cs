@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PackageManager4Apps for Apps")]
-[assembly: AssemblyCopyright("Copyright (c) 2018")]
+[assembly: AssemblyProduct("PackageManager for applications (PackageManager4Apps)")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.0.0")]
@@ -24,4 +24,4 @@ using System.Runtime.InteropServices;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-[assembly: AssemblyInformationalVersion("1.0.0.0 - Git Commit Sha:''")]
+[assembly: AssemblyInformationalVersion("1.0.0 - Git Commit Sha:''")]
