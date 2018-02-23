@@ -1,6 +1,6 @@
 ﻿using NuGet;
 
-namespace PackageManager4Apps.Nuget.Extensions
+namespace PackageManager4Apps.ImplemNuget.Extensions
 {
     internal static class PackageMetadataExtensions
     {

@@ -6,14 +6,14 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PackageManager4Apps.Tests")]
+[assembly: AssemblyProduct("PackageManager4Apps")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("c059e5c3-7610-438a-8a7f-9a2bae34fc86")]
+[assembly: Guid("4deddff3-676b-4b45-8e17-257738c770c7")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]

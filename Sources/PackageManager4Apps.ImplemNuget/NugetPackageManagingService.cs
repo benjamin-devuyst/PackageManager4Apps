@@ -6,35 +6,40 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using NuGet;
-using PackageManager4Apps.Nuget.Extensions;
+using PackageManager4Apps.ImplemNuget.Extensions;
+using Prism.Logging;
 
-namespace PackageManager4Apps.Nuget
+namespace PackageManager4Apps.ImplemNuget
 {
+    /// <summary>
+    /// Implementation of a <see cref="IPackageManagingService"/> on a nuget server
+    /// </summary>
     public class NugetPackageManagingService : IPackageManagingService
     {
-        //private readonly IPackageRepository packageRepository;
         private readonly bool allowMultipleVersionOfPackagesInCache;
         private readonly DirectoryInfo localRepository;
-        private readonly Action<string> doLogAction;
+        private readonly ILoggerFacade logger;
         private readonly Uri packageSourcePath;
 
         /// <summary>
-        /// Crée une nouvelle instance de <c>CachedNugetPackageManagingService</c>
+        /// Create a new instance of <c>NugetPackageManagingService</c>
         /// </summary>
-        /// <param name="packageSourcePath">Uri du service remote de packages nuget</param>
-        /// <param name="localRepository"><see cref="DirectoryInfo"/>pointant vers le folder de cache local (le folder peut ne pas exister)</param>
-        /// <param name="allowMultipleVersionOfPackagesInCache"><c>True</c>:Autorise plusieurs versions d'un package dans le cache local; <c>False</c>:Ne conserve que la version active et chargée dans le cache</param>
-        // protected internal sans raison technique, non nécessaire de le rendre public, mais si nécessaire, on peut le faire !
-        public NugetPackageManagingService(Uri packageSourcePath, DirectoryInfo localRepository, bool allowMultipleVersionOfPackagesInCache, Action<string> doLogAction)
+        /// <param name="packageSourcePath">Uri of the nuget server</param>
+        /// <param name="localRepository"><see cref="DirectoryInfo"/> of the local nuget cache folder (folder may not exists, it will be created)</param>
+        /// <param name="allowMultipleVersionOfPackagesInCache"><c>True</c>:allow to have multiple version of a package in cache; <c>False</c>:keep only the last version loaded</param>
+        public NugetPackageManagingService(Uri packageSourcePath, DirectoryInfo localRepository, bool allowMultipleVersionOfPackagesInCache, ILoggerFacade logger)
         {
             if (!packageSourcePath.IsAbsoluteUri) throw new ArgumentException($"{nameof(packageSourcePath)} must be an absolute Uri");
 
             this.packageSourcePath = packageSourcePath;
             this.allowMultipleVersionOfPackagesInCache = allowMultipleVersionOfPackagesInCache;
-            this.doLogAction = doLogAction;
+            this.logger = logger;
             this.localRepository = localRepository;
         }
-
+        
+        /// <summary>
+        /// See <see cref="IPackageManagingService.EnsurePackageLoaded"/>
+        /// </summary>
         public void EnsurePackageLoaded(PackageMetadata packageInfo)
         {
             // Mutex sur 
@@ -58,7 +63,7 @@ namespace PackageManager4Apps.Nuget
 
         private void DoEnsurePackageLoaded(PackageMetadata packageInfo)
         {
-            var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSourcePath.AbsoluteUri); ;
+            var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSourcePath.AbsoluteUri);
             var packageManager = new NuGet.PackageManager(packageRepository, GetCacheFolderPath());
             var packageId = packageInfo.PackageKey;
             var packageSemanticVersion = packageInfo.ToSemanticVersion();
@@ -126,8 +131,10 @@ namespace PackageManager4Apps.Nuget
             return currentPackageManager.LocalRepository.FindPackage(packageId, packageSemanticVersion);
         }
 
-        private void LogPackageOperation(string packageId, SemanticVersion version, string operation, Guid correlationId, [CallerMemberName]string callerMemberName = null)
-            => this.doLogAction($"[{nameof(NugetPackageManagingService)}.{callerMemberName}] Package Id:{packageId}, Version:{version}, CorrelationId:{correlationId} - {operation}");
+        private void LogPackageOperation(string packageId, SemanticVersion version, string operation,
+            Guid correlationId, [CallerMemberName] string callerMemberName = null)
+            => logger.Log(
+                $"[{nameof(NugetPackageManagingService)}.{callerMemberName}(Package Id:{packageId}, Version:{version}, CorrelationId:{correlationId})] - {operation}", Category.Info, Priority.Medium);
 
         private string GetCacheFolderPath()
             => localRepository.FullName;

@@ -1,10 +1,10 @@
 using System;
-using PackageManager4Apps.Nuget;
+using PackageManager4Apps.ImplemNuget;
 
-namespace AppPackageManager.Tests.PackageManagingServiceTestsResources
+namespace PackageManager4Apps.Tests.PackageManagingServiceTestsResources
 {
     /// <summary>
-    /// Facade permettant l'exécution du test Multi version's tems cached au sein d'un appdomain séparé
+    /// Facade that allows the execution of the test 'Multi Version' inside a separated appdomain
     /// </summary>
     public class MultiVersionsPackageManagingServiceTestCase : MarshalByRefObject
     {
